@@ -31,7 +31,7 @@ func (a FindSeriesByIDAction) Execute(w http.ResponseWriter, r *http.Request) {
 	output, err := a.uc.Execute(r.Context(), domain.SeriesID(seriesID))
 	switch {
 	case errors.Is(err, domain.ErrSeriesNotFound):
-		res = response.NewError(http.StatusBadRequest, err.Error())
+		res = response.NewError(http.StatusNotFound, err.Error())
 	case err != nil:
 		res = response.NewError(http.StatusInternalServerError)
 	default:

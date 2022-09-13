@@ -110,7 +110,7 @@ func TestFindSeriesByID(t *testing.T) {
 				output: usecase.FindSeriesByIDOutput{},
 				err:    domain.ErrSeriesNotFound,
 			},
-			ExpectedCode: http.StatusBadRequest,
+			ExpectedCode: http.StatusNotFound,
 			ExpectedBody: errorResponse{
 				Errors: []string{domain.ErrSeriesNotFound.Error()},
 			},

@@ -84,7 +84,7 @@ func TestFindReviewsBySeriesAction(t *testing.T) {
 				},
 				err: domain.ErrSeriesNotFound,
 			},
-			ExpectedCode: http.StatusBadRequest,
+			ExpectedCode: http.StatusNotFound,
 			ExpectedBody: errorResponse{
 				Errors: []string{domain.ErrSeriesNotFound.Error()},
 			},
