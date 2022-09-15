@@ -137,7 +137,7 @@ curl --request POST 'localhost:8000/v1/reviews' \
 
 ## TODO
 
-- Docker
+- Add postgres migration script
 - Swagger documentation
 - Logging 
 - Testing database packages
