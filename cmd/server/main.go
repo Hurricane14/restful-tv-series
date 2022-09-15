@@ -19,8 +19,7 @@ import (
 )
 
 type ServerConfig struct {
-	Host string `env:"HOST"`
-	Port int    `env:"PORT"`
+	Port int `env:"PORT"`
 }
 
 type DBConfig struct {
@@ -81,8 +80,7 @@ func main() {
 	)
 	{
 		addr := fmt.Sprintf(
-			"%s:%d",
-			config.Server.Host,
+			":%d",
 			config.Server.Port,
 		)
 		server = &http.Server{
