@@ -30,6 +30,7 @@ services:
 
     volumes:
       - ${PG_VOLUME_PATH}:/var/lib/postgresql/data
+      - ./scripts:/docker-entrypoint-initdb.d
 
     environment:
       POSTGRES_USER: ${DB_USER}
