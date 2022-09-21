@@ -23,18 +23,18 @@ type ServerConfig struct {
 }
 
 type DBConfig struct {
-	Type       string `env:"DB_TYPE"`
-	Host       string `env:"DB_HOST"`
-	Port       int    `env:"DB_PORT"`
-	Database   string `env:"DB_NAME"`
-	User       string `env:"DB_USER"`
-	Password   string `env:"DB_PASSWORD"`
-	SSLEnabled string `env:"DB_SSLMODE"`
+	Type       string `env:"TYPE"`
+	Host       string `env:"HOST"`
+	Port       int    `env:"PORT"`
+	Database   string `env:"NAME"`
+	User       string `env:"USER"`
+	Password   string `env:"PASSWORD"`
+	SSLEnabled string `env:"SSLMODE"`
 }
 
 type Config struct {
 	Server ServerConfig
-	DB     DBConfig
+	DB     DBConfig `env-prefix:"DB_"`
 }
 
 func main() {
