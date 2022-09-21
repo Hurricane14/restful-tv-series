@@ -78,15 +78,9 @@ func main() {
 		validator,
 		10*time.Second,
 	)
-	{
-		addr := fmt.Sprintf(
-			":%d",
-			config.Server.Port,
-		)
-		server = &http.Server{
-			Addr:    addr,
-			Handler: handler,
-		}
+	server = &http.Server{
+		Addr:    fmt.Sprintf(":%d", config.Server.Port),
+		Handler: handler,
 	}
 
 	log.Printf("Starting server at %s\n", server.Addr)
