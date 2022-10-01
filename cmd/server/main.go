@@ -18,23 +18,20 @@ import (
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
-type ServerConfig struct {
-	Port int `env:"PORT"`
-}
-
-type DBConfig struct {
-	Type       string `env:"TYPE"`
-	Host       string `env:"HOST"`
-	Port       int    `env:"PORT"`
-	Database   string `env:"NAME"`
-	User       string `env:"USER"`
-	Password   string `env:"PASSWORD"`
-	SSLEnabled string `env:"SSLMODE"`
-}
 
 type Config struct {
-	Server ServerConfig
-	DB     DBConfig `env-prefix:"DB_"`
+	Server struct {
+		Port int `env:"PORT"`
+	}
+	DB struct {
+		Type       string `env:"TYPE"`
+		Host       string `env:"HOST"`
+		Port       int    `env:"PORT"`
+		Database   string `env:"NAME"`
+		User       string `env:"USER"`
+		Password   string `env:"PASSWORD"`
+		SSLEnabled string `env:"SSLMODE"`
+	} `env-prefix:"DB_"`
 }
 
 func main() {
