@@ -4,6 +4,8 @@ import (
 	"context"
 	"net/http"
 	"series/adapter/api/action"
+	"series/adapter/api/middleware"
+	"series/adapter/logger"
 	"series/adapter/presenter"
 	"series/adapter/repository"
 	"series/adapter/validator"
@@ -15,6 +17,7 @@ import (
 
 type service struct {
 	repo      repository.Repository
+	logger    logger.Logger
 	validator validator.Validator
 	dbTimeout time.Duration
 	router    *mux.Router
@@ -22,17 +25,23 @@ type service struct {
 
 func NewHandler(
 	repo repository.Repository,
+	logger logger.Logger,
 	validator validator.Validator,
 	dbTimeout time.Duration,
 ) http.Handler {
 	service := &service{
 		repo:      repo,
+		logger:    logger,
 		validator: validator,
 		dbTimeout: dbTimeout,
+		router:    &mux.Router{},
 	}
 
 	router := mux.NewRouter()
 	api := router.PathPrefix("/v1").Subrouter()
+
+	api.Use(middleware.Logging(logger))
+
 	api.Handle("/series", service.buildCreateSeriesAction()).Methods(http.MethodPost)
 	api.Handle("/series", service.buildFindSeriesByTitleAction()).
 		Queries("q", "{query}").

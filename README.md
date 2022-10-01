@@ -138,6 +138,5 @@ curl --request POST 'localhost:8000/v1/reviews' \
 ## TODO
 
 - Swagger documentation
-- Logging 
 - Testing database packages
 - Use mocking frameworks

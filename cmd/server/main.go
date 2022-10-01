@@ -4,20 +4,20 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"series/adapter/logger"
 	"series/adapter/repository"
 	"series/framework/database/postgres"
 	"series/framework/handler/gorilla"
+	"series/framework/logging/logrus"
 	"series/framework/validation/goplayground"
 	"syscall"
 	"time"
 
 	"github.com/ilyakaznacheev/cleanenv"
 )
-
 
 type Config struct {
 	Server struct {
@@ -32,11 +32,15 @@ type Config struct {
 		Password   string `env:"PASSWORD"`
 		SSLEnabled string `env:"SSLMODE"`
 	} `env-prefix:"DB_"`
+	Logger struct {
+		Level string `env:"LVL"`
+	} `env-prefix:"LOG_"`
 }
 
 func main() {
 	var (
 		config    Config
+		logger    logger.Logger
 		repo      repository.Repository
 		validator = goplayground.NewValidator()
 		handler   http.Handler
@@ -70,8 +74,14 @@ func main() {
 		panic("Unknown db type")
 	}
 
+	logger, err := logrus.New(config.Logger.Level)
+	if err != nil {
+		panic(err)
+	}
+
 	handler = gorilla.NewHandler(
 		repo,
+		logger,
 		validator,
 		10*time.Second,
 	)
@@ -80,7 +90,7 @@ func main() {
 		Handler: handler,
 	}
 
-	log.Printf("Starting server at %s\n", server.Addr)
+	logger.Infof("Starting server at %s", server.Addr)
 	go func() {
 		if err := server.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 			panic(err)
@@ -91,7 +101,7 @@ func main() {
 	signal.Notify(quit, syscall.SIGINT)
 	<-quit
 
-	log.Println("Server is shutting down...")
+	logger.Infof("Server is shutting down...")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
