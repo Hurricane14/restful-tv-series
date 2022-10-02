@@ -1,12 +1,13 @@
 package logrus
 
 import (
+	"io"
 	"series/adapter/logger"
 
 	"github.com/sirupsen/logrus"
 )
 
-func New(level string) (logger.Logger, error) {
+func New(level string, out io.Writer) (logger.Logger, error) {
 	lvl, err := logrus.ParseLevel(level)
 	if err != nil {
 		return nil, err
@@ -14,6 +15,7 @@ func New(level string) (logger.Logger, error) {
 
 	logger := logrus.New()
 	logger.SetLevel(lvl)
+	logger.SetOutput(out)
 	logger.SetFormatter(&logrus.TextFormatter{
 		DisableTimestamp: true,
 	})

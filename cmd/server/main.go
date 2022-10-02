@@ -34,6 +34,7 @@ type Config struct {
 	} `env-prefix:"DB_"`
 	Logger struct {
 		Level string `env:"LVL"`
+		File  string `env:"FILE" env-default:"stderr"`
 	} `env-prefix:"LOG_"`
 }
 
@@ -74,9 +75,23 @@ func main() {
 		panic("Unknown db type")
 	}
 
-	logger, err := logrus.New(config.Logger.Level)
-	if err != nil {
-		panic(err)
+	{
+		var err error
+		var logFile = os.Stderr
+		if filename := config.Logger.File; filename != "stderr" {
+			logFile, err = os.OpenFile(
+				filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600,
+			)
+			if err != nil {
+				panic(err)
+			}
+			defer logFile.Close()
+		}
+
+		logger, err = logrus.New(config.Logger.Level, logFile)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	handler = gorilla.NewHandler(
