@@ -1,4 +1,8 @@
-# REST API TV Series Service
+# RESTful TV Series Service
+
+*Configuration*: edit .env file (see .env.example)
+
+*Running*: `docker compose up app`
 
 ## Endpoints
 
