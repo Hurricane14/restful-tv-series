@@ -41,6 +41,7 @@ func NewHandler(
 	api := router.PathPrefix("/v1").Subrouter()
 
 	api.Use(middleware.Logging(logger))
+	api.Use(middleware.CORS)
 
 	api.Handle("/series", service.buildCreateSeriesAction()).Methods(http.MethodPost)
 	api.Handle("/series", service.buildFindSeriesByTitleAction()).
