@@ -11,17 +11,17 @@ services:
     env_file: .env
 
     environment:
-      DB_HOST: "postgres-db"
+      DB_HOST: ${DB_TYPE}
 
     depends_on:
-      - db
+      - ${DB_TYPE}
 
     networks:
       - series-nw
 
-  db:
+  postgres:
 
-    container_name: "postgres-db"
+    container_name: "postgres"
 
     image: "postgres:latest"
 
