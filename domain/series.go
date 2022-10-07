@@ -11,9 +11,7 @@ func (id SeriesID) String() string {
 	return string(id)
 }
 
-var (
-	ErrSeriesNotFound = errors.New("series not found")
-)
+var ErrSeriesNotFound = errors.New("series not found")
 
 type (
 	SeriesRepository interface {

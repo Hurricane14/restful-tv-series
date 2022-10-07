@@ -42,7 +42,6 @@ func NewCreateReviewInteractor(
 	presenter CreateReviewPresenter,
 	timeout time.Duration,
 ) CreateReviewUseCase {
-
 	return createReviewInteractor{
 		series:    series,
 		reviews:   reviews,
@@ -54,7 +53,6 @@ func NewCreateReviewInteractor(
 func (i createReviewInteractor) Execute(
 	ctx context.Context, input CreateReviewInput,
 ) (CreateReviewOutput, error) {
-
 	ctx, cancel := context.WithTimeout(ctx, i.timeout)
 	defer cancel()
 

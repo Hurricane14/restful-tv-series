@@ -39,7 +39,6 @@ func NewFindSeriesByTitleInteractor(
 	presenter FindSeriesByTitlePresenter,
 	timeout time.Duration,
 ) FindSeriesByTitleUseCase {
-
 	return findSeriesByTitleInteractor{
 		repo:      series,
 		presenter: presenter,
@@ -50,7 +49,6 @@ func NewFindSeriesByTitleInteractor(
 func (s findSeriesByTitleInteractor) Execute(
 	ctx context.Context, query string,
 ) (FindSeriesByTitleOutput, error) {
-
 	ctx, cancel := context.WithTimeout(ctx, s.timeout)
 	defer cancel()
 
@@ -59,5 +57,4 @@ func (s findSeriesByTitleInteractor) Execute(
 		return s.presenter.Output(nil), err
 	}
 	return s.presenter.Output(series), nil
-
 }

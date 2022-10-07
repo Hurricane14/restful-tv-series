@@ -18,7 +18,6 @@ func (r *seriesRepository) Create(
 	ctx context.Context,
 	series domain.Series,
 ) (domain.Series, error) {
-
 	var execer interface {
 		Exec(context.Context, string, ...any) (pgconn.CommandTag, error)
 	} = r.db.pool
@@ -57,7 +56,6 @@ func (r *seriesRepository) FindByID(
 	ctx context.Context,
 	ID domain.SeriesID,
 ) (domain.Series, error) {
-
 	var (
 		id                 string
 		title              string
@@ -107,11 +105,9 @@ func (r *seriesRepository) FindByID(
 
 // FindByTitle implements domain.SeriesRepository
 func (r *seriesRepository) FindByTitle(ctx context.Context, title string) ([]domain.Series, error) {
-	var (
-		querier interface {
-			Query(context.Context, string, ...any) (pgx.Rows, error)
-		} = r.db.pool
-	)
+	var querier interface {
+		Query(context.Context, string, ...any) (pgx.Rows, error)
+	} = r.db.pool
 
 	tx, ok := ctx.Value(CtxKeyTx).(pgx.Tx)
 	if ok {

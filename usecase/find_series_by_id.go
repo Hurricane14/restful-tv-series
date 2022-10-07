@@ -46,7 +46,6 @@ func NewFindSeriesByIDInteractor(
 	presenter FindSeriesByIDPresenter,
 	timeout time.Duration,
 ) FindSeriesByIDUseCase {
-
 	return findSeriesByIDInteractor{
 		series:    series,
 		reviews:   reviews,
@@ -58,7 +57,6 @@ func NewFindSeriesByIDInteractor(
 func (i findSeriesByIDInteractor) Execute(
 	ctx context.Context, seriesID domain.SeriesID,
 ) (FindSeriesByIDOutput, error) {
-
 	ctx, cancel := context.WithTimeout(ctx, i.timeout)
 	defer cancel()
 
@@ -82,5 +80,4 @@ func (i findSeriesByIDInteractor) Execute(
 		return i.presenter.Output(domain.Series{}, nil), err
 	}
 	return i.presenter.Output(series, reviews), nil
-
 }

@@ -51,11 +51,9 @@ func (r *reviewRepository) FindBySeries(
 	ctx context.Context,
 	seriesID domain.SeriesID,
 ) ([]domain.Review, error) {
-	var (
-		querier interface {
-			Query(context.Context, string, ...any) (pgx.Rows, error)
-		} = r.db.pool
-	)
+	var querier interface {
+		Query(context.Context, string, ...any) (pgx.Rows, error)
+	} = r.db.pool
 
 	tx, ok := ctx.Value(CtxKeyTx).(pgx.Tx)
 	if ok {

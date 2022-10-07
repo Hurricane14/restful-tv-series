@@ -77,10 +77,10 @@ func main() {
 
 	{
 		var err error
-		var logFile = os.Stderr
+		logFile := os.Stderr
 		if filename := config.Logger.File; filename != "stderr" {
 			logFile, err = os.OpenFile(
-				filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600,
+				filename, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o600,
 			)
 			if err != nil {
 				panic(err)

@@ -46,7 +46,6 @@ func NewCreateSeriesInteractor(
 	presenter CreateSeriesPresenter,
 	timeout time.Duration,
 ) CreateSeriesUseCase {
-
 	return createSeriesInteractor{
 		repo:      repo,
 		presenter: presenter,
@@ -57,7 +56,6 @@ func NewCreateSeriesInteractor(
 func (i createSeriesInteractor) Execute(
 	ctx context.Context, input CreateSeriesInput,
 ) (CreateSeriesOutput, error) {
-
 	ctx, cancel := context.WithTimeout(ctx, i.timeout)
 	defer cancel()
 
