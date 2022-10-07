@@ -48,7 +48,7 @@ func main() {
 		server    *http.Server
 	)
 
-	if err := cleanenv.ReadEnv(&config); err != nil {
+	if err := cleanenv.ReadConfig(".env", &config); err != nil {
 		panic(err)
 	}
 
